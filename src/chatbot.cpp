@@ -1,9 +1,10 @@
+#include "chatbot.h"
+
 #include <algorithm>
 #include <ctime>
 #include <iostream>
 #include <random>
 
-#include "chatbot.h"
 #include "chatlogic.h"
 #include "graphedge.h"
 #include "graphnode.h"
@@ -56,15 +57,14 @@ ChatBot &ChatBot::operator=(ChatBot &&chatbot) {
     _currentNode = chatbot._currentNode;
     _rootNode = chatbot._rootNode;
     _chatLogic = chatbot._chatLogic;
-    
+
     // https://knowledge.udacity.com/questions/922060
     _chatLogic->SetChatbotHandle(this);
-    
+
     chatbot._image = nullptr;
     chatbot._chatLogic = nullptr;
     chatbot._currentNode = nullptr;
     chatbot._rootNode = nullptr;
-
   }
   return *this;
 }
@@ -75,7 +75,7 @@ ChatBot::ChatBot(ChatBot &&chatbot) {
   _currentNode = chatbot._currentNode;
   _rootNode = chatbot._rootNode;
   _chatLogic = chatbot._chatLogic;
-  
+
   // https://knowledge.udacity.com/questions/922060
   _chatLogic->SetChatbotHandle(this);
 
@@ -104,8 +104,7 @@ void ChatBot::ReceiveMessageFromUser(std::string message) {
   GraphNode *newNode;
   if (levDists.size() > 0) {
     // sort in ascending order of Levenshtein distance (best fit is at the top)
-    std::sort(levDists.begin(),
-              levDists.end(),
+    std::sort(levDists.begin(), levDists.end(),
               [](const EdgeDist &a, const EdgeDist &b) {
                 return a.second < b.second;
               });
