@@ -44,14 +44,30 @@ ChatBot::~ChatBot() {
 ////
 ChatBot::ChatBot(const ChatBot &chatbot) {
   std::cout << "ChatBot Copy Constructor" << std::endl;
+  _image = new wxBitmap();
   _image = chatbot._image;
   _chatLogic = chatbot._chatLogic;
   _currentNode = chatbot._currentNode;
   _rootNode = chatbot._rootNode;
 }
 
+ChatBot &ChatBot::operator=(const ChatBot &chatbot) {
+  std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+  if (this != &chatbot) {
+    _image = new wxBitmap();
+    _image = chatbot._image;
+    _currentNode = chatbot._currentNode;
+    _rootNode = chatbot._rootNode;
+    _chatLogic = chatbot._chatLogic;
+
+    // https://knowledge.udacity.com/questions/922060
+    _chatLogic->SetChatbotHandle(this);
+  }
+  return *this;
+}
+
 ChatBot &ChatBot::operator=(ChatBot &&chatbot) {
-  std::cout << "ChatBot Assignment Operator" << std::endl;
+  std::cout << "ChatBot Move Assignment Operator" << std::endl;
   if (this != &chatbot) {
     _image = chatbot._image;
     _currentNode = chatbot._currentNode;
